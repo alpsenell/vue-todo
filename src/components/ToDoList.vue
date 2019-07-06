@@ -2,17 +2,21 @@
     <div>
         <div><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Check All</div>
         <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo" @keyup.enter="addTodo">
+      <transition-group name="focus-in">
         <div v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
-            <div class="todo-item-left">
-                <input type="checkbox" v-model="todo.completed">
-                <div v-if="!todo.editing" @click="editTodo(todo)" class="todo-item-label" :class="{ 'completed-todo' : todo.completed}">{{todo.title}}</div>
-                <input v-else class="todo-item-edit" type="text" v-model="todo.title"
-                 @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)" @blur="doneEdit(todo)" v-focus>
+          <div class="todo-item-left">
+            <input type="checkbox" v-model="todo.completed">
+            <div v-if="!todo.editing" @click="editTodo(todo)" class="todo-item-label"
+                 :class="{ 'completed-todo' : todo.completed}">{{todo.title}}
             </div>
-            <div class="remove-item" @click="removeTodo(index)">
-                &times;
-            </div>
+            <input v-else class="todo-item-edit" type="text" v-model="todo.title"
+                   @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)" @blur="doneEdit(todo)" v-focus>
+          </div>
+          <div class="remove-item" @click="removeTodo(index)">
+            &times;
+          </div>
         </div>
+      </transition-group>
         <div> {{ remainingTodos }} Todos left!</div>
         <div class="filtering-wrapper">
             <div>
@@ -24,7 +28,7 @@
                 <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
             </div>
         </div>
-    </div> 
+    </div>
 </template>
 
 <script>
@@ -66,7 +70,7 @@ export default {
               return this.todos.filter(todo => !todo.completed)
           } else if (this.filter === 'completed') {
               return this.todos.filter(todo => todo.completed)
-          } 
+          }
 
           return this.todos
       },
@@ -197,5 +201,79 @@ export default {
         &:focus {
             outline: none;
         }
+    }
+
+    .focus-in-enter-active {
+      animation: focus-in-contract-bck .5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    }
+
+    .focus-in-leave-active {
+      animation: blur-out-expand-fwd .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    @-webkit-keyframes focus-in-contract-bck {
+      0% {
+        letter-spacing: 1em;
+        -webkit-transform: translateZ(300px);
+        transform: translateZ(300px);
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+      }
+      100% {
+        -webkit-transform: translateZ(12px);
+        transform: translateZ(12px);
+        -webkit-filter: blur(0);
+        filter: blur(0);
+        opacity: 1;
+      }
+    }
+    @keyframes focus-in-contract-bck {
+      0% {
+        letter-spacing: 1em;
+        -webkit-transform: translateZ(300px);
+        transform: translateZ(300px);
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+      }
+      100% {
+        -webkit-transform: translateZ(12px);
+        transform: translateZ(12px);
+        -webkit-filter: blur(0);
+        filter: blur(0);
+        opacity: 1;
+      }
+    }
+
+    @-webkit-keyframes blur-out-expand-fwd {
+      0% {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-filter: blur(0.01);
+        filter: blur(0.01);
+      }
+      100% {
+        letter-spacing: 1em;
+        -webkit-transform: translateZ(300px);
+        transform: translateZ(300px);
+        -webkit-filter: blur(12px) opacity(0%);
+        filter: blur(12px) opacity(0%);
+      }
+    }
+    @keyframes blur-out-expand-fwd {
+      0% {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-filter: blur(0.01);
+        filter: blur(0.01);
+      }
+      100% {
+        letter-spacing: 1em;
+        -webkit-transform: translateZ(300px);
+        transform: translateZ(300px);
+        -webkit-filter: blur(12px) opacity(0%);
+        filter: blur(12px) opacity(0%);
+      }
     }
 </style>
