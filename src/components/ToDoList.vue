@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Check All</div>
+    <div class="check-all-container">
+      <input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos">Check All
+    </div>
     <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo" @keyup.enter="addTodo">
     <transition-group name="focus-in">
-      <todo-item v-for="(todo,index) in todosFiltered"
-                 key="todo.id" :todo="todo" :index="index" :checkAll="!anyRemaining"
+      <todo-item v-for="todo in todosFiltered"
+                 :key="todo.id" :todo="todo" :checkAll="!anyRemaining"
                  @removedTodo="removeTodo" @finishedEdit="finishedEdit">
       </todo-item>
     </transition-group>
-    <div> {{ remainingTodos }} Todos left!</div>
+    <div class="remaining-todos"> {{ remainingTodos }} Todos left!</div>
     <div class="filtering-wrapper">
-      <div>
+      <div class="filters">
         <button :class="{ active : filter === 'all' }" @click="filter ='all'">All</button>
         <button :class="{ active : filter === 'active' }" @click="filter = 'active'">Active</button>
         <button :class="{ active : filter === 'completed' }" @click="filter = 'completed'">Completed</button>
@@ -34,19 +36,25 @@
     data() {
       return {
         newTodo: '',
-        idForTodo: 3,
+        idForTodo: 4,
         titleBeforeEdit: '',
         filter: 'all',
         todos: [
           {
             'id': 1,
-            'title': 'Finish Vue Screencast',
+            'title': 'Buy food for Maylo',
             'completed': false,
             'editing': false
           },
           {
             'id': 2,
-            'title': 'Take over patates',
+            'title': 'Take Bambam to pet coiffure',
+            'completed': false,
+            'editing': false
+          },
+          {
+            'id': 3,
+            'title': 'Buy protein powder',
             'completed': false,
             'editing': false
           }
@@ -91,8 +99,10 @@
         this.newTodo = '';
         this.idForTodo++;
       },
-      removeTodo(index) {
-        this.todos.splice(index, 1);
+      removeTodo(id) {
+        let indexOfTodo = this.todos.findIndex((item) => item.id === id)
+
+        this.todos.splice(indexOfTodo, 1)
       },
       checkAllTodos() {
         this.todos.forEach((todo) => todo.completed = event.target.checked)
@@ -100,8 +110,10 @@
       clearCompleted() {
         this.todos = this.todos.filter(todo => !todo.completed)
       },
-      finishedEdit (data) {
-        this.todos.splice(data.index, 1, data.todo)
+      finishedEdit(data) {
+        let indexOfTodo = this.todos.findIndex((item) => item.id === data.id)
+
+        this.todos.splice(indexOfTodo, 1, data)
       }
     }
   }
@@ -116,6 +128,16 @@
 
     &:focus {
       outline: 0;
+    }
+  }
+
+  .check-all-container {
+    display: flex;
+    height: 50px;
+    align-items: center;
+
+    & input {
+      margin-right: 20px;
     }
   }
 
@@ -163,19 +185,56 @@
     color: gray;
   }
 
-  .complete-all-todos button {
-    padding: 5px 15px;
-    background-color: rgb(215, 202, 202);
-    cursor: pointer;
-    border: none;
-    box-shadow: none;
+  .remaining-todos {
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: rgba(255, 99, 71, .5);
+    color: #000;
   }
 
-  .active {
-    background-color: goldenrod;
+  .filtering-wrapper {
+    padding: 10px 0 0 0;
 
-    &:focus {
-      outline: none;
+    & > div:not(.filters) {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+
+      & button {
+        padding: 10px 20px;
+        background-color: gray;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        width: 100%;
+      }
+    }
+    & .filters {
+      display: flex;
+      justify-content: space-evenly;
+
+      & .active {
+        background-color: green;
+        color: black;
+
+        &:focus{
+          outline: none;
+        }
+      }
+      & button {
+        padding: 10px 20px;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        width: 150px;
+      }
     }
   }
 
