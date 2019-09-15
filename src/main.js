@@ -3,7 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 
-Vue.config.productionTip = false
+window.eventBus = new Vue();
+
+Vue.config.productionTip = false;
 
 /* created to work for click outside of the input but couldn't manage it
 Vue.directive('click-outside', {
@@ -25,4 +27,4 @@ new Vue({
   el: '#app',
   components: { App },
   template: '<App/>'
-})
+});

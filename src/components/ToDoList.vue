@@ -6,8 +6,7 @@
     <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo" @keyup.enter="addTodo">
     <transition-group name="focus-in">
       <todo-item v-for="todo in todosFiltered"
-                 :key="todo.id" :todo="todo" :checkAll="!anyRemaining"
-                 @removedTodo="removeTodo" @finishedEdit="finishedEdit">
+                 :key="todo.id" :todo="todo" :checkAll="!anyRemaining">
       </todo-item>
     </transition-group>
     <div class="remaining-todos"> {{ remainingTodos }} Todos left!</div>
@@ -61,6 +60,10 @@
         ]
       }
     },
+    created() {
+      eventBus.$on('removedTodo', (index) => this.removeTodo(index));
+      eventBus.$on('finishedEdit', (data) => this.finishedEdit(data))
+    },
     computed: {
       remainingTodos() {
         return this.todos.filter(todo => !todo.completed).length
@@ -100,7 +103,7 @@
         this.idForTodo++;
       },
       removeTodo(id) {
-        let indexOfTodo = this.todos.findIndex((item) => item.id === id)
+        let indexOfTodo = this.todos.findIndex((item) => item.id === id);
 
         this.todos.splice(indexOfTodo, 1)
       },
@@ -111,7 +114,7 @@
         this.todos = this.todos.filter(todo => !todo.completed)
       },
       finishedEdit(data) {
-        let indexOfTodo = this.todos.findIndex((item) => item.id === data.id)
+        let indexOfTodo = this.todos.findIndex((item) => item.id === data.id);
 
         this.todos.splice(indexOfTodo, 1, data)
       }

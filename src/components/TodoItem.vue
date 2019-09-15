@@ -51,7 +51,7 @@
     },
     methods: {
       removeTodo(id) {
-        this.$emit('removedTodo', id)
+        eventBus.$emit('removedTodo', id)
       },
       editTodo() {
         this.titleBeforeEdit = this.title;
@@ -64,7 +64,7 @@
 
         this.editing = false;
 
-        this.$emit('finishedEdit', {
+        eventBus.$emit('finishedEdit', {
             'id': this.id,
             'title': this.title,
             'completed': this.completed,
