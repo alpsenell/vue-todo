@@ -9,7 +9,9 @@
                  :key="todo.id" :todo="todo" :checkAll="!anyRemaining">
       </todo-item>
     </transition-group>
-    <div class="remaining-todos"> {{ remainingTodos }} Todos left!</div>
+
+    <remaining-todos :remaining="remainingTodos"></remaining-todos>
+
     <div class="filtering-wrapper">
       <div class="filters">
         <button :class="{ active : filter === 'all' }" @click="filter ='all'">All</button>
@@ -25,13 +27,11 @@
 
 <script>
   import TodoItem from './TodoItem'
+  import RemainingTodos from './TodosRemaining'
 
   export default {
     name: 'todo-list',
-    components: {TodoItem},
-    comments: {
-      TodoItem,
-    },
+    components: {TodoItem, RemainingTodos},
     data() {
       return {
         newTodo: '',
