@@ -1,0 +1,61 @@
+@mixin transition-ease($duration: .25s) {
+  -webkit-transition: all $duration ease;
+  -moz-transition: all $duration ease;
+  -ms-transition: all $duration ease;
+  -o-transition: all $duration ease;
+  transition: all $duration ease;
+}
+
+@mixin reset__padding() {
+  padding: 0;
+}
+
+@mixin reset__margin() {
+  margin: 0;
+}
+
+@mixin reset() {
+  @include reset__margin();
+  @include reset__padding();
+}
+
+@mixin unselectable() {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
+@mixin todo__input() {
+  @include transition-ease();
+  @include unselectable();
+  display: table;
+  height: 30px;
+  line-height: 28px;
+  padding: 0 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin center(){
+  display: flex;
+  justify-content: center;
+}
+
+@mixin viewport__view () {
+  width: 100vw;
+  height: 100vh;
+}
