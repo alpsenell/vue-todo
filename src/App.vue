@@ -21,14 +21,16 @@ export default {
 
   body, html {
     @include reset;
-    @include clearfix;
-  }
-
-  #app {
+    @include center;
+    @include viewport__view;
     font-family: $font__family--primary;
     background-color: $background__color--primary--dark;
     color: $color--primary;
-    @include center;
-    @include viewport__view;
+
+    #app {
+      @include app__view;
+      @include center;
+      height: 100%;
+    }
   }
 </style>

@@ -1,3 +1,5 @@
+@import "./_variables";
+
 @mixin transition-ease($duration: .25s) {
   -webkit-transition: all $duration ease;
   -moz-transition: all $duration ease;
@@ -28,15 +30,19 @@
 }
 
 @mixin todo__input() {
+  all: unset;
   @include transition-ease();
   @include unselectable();
-  display: table;
-  height: 30px;
-  line-height: 28px;
-  padding: 0 14px;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-bottom: 1px solid $color--input;
+  color: $color--input;
+  height: 40px;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 @mixin clearfix() {
@@ -50,12 +56,31 @@
   }
 }
 
-@mixin center(){
+@mixin center() {
   display: flex;
   justify-content: center;
 }
-
-@mixin viewport__view () {
+@mixin viewport__view() {
   width: 100vw;
   height: 100vh;
+}
+
+@mixin app__view() {
+  width: 80vw;
+}
+
+@mixin large() {
+  width: 80%;
+}
+
+@mixin medium() {
+  width: 40%;
+}
+
+@mixin small() {
+  width: 20%;
+}
+
+@mixin font__size--main() {
+  font-size: 22px;
 }
