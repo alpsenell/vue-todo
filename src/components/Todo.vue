@@ -2,7 +2,7 @@
     <div id="todo">
         <input
                 @keyup.enter="addNewTodo"
-                @keyup.esc="cancelNewTodo"
+                @keyup.esc="resetTodo"
                 class="todo__input large"
                 placeholder="What needs to be done?"
                 type="text"
@@ -16,32 +16,43 @@
                     type="checkbox">
             <label
                     class="todo__checkbox"
-                    :for="'todo__checkbox-' + index"></label>
-        {{assignment}}
+                    :for="'todo__checkbox-' + index">
+            </label>
+            <p>{{assignment}}</p>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Todo',
+  name: 'Todo',
 
-    data() {
-        return {
-            newTodo: '',
-            createdTodos: [],
-        };
+  data() {
+    return {
+      newTodo: '',
+      createdTodos: [],
+    };
+  },
+
+  computed: {
+    isNewTodoEmpty() {
+      return this.newTodo.trim() === '';
+    },
+  },
+
+  methods: {
+    addNewTodo() {
+      if (!this.isNewTodoEmpty) {
+        this.createdTodos.push(this.newTodo.trim());
+      }
+
+      this.resetTodo();
     },
 
-    methods: {
-        addNewTodo() {
-            this.createdTodos.push(this.newTodo.trim());
-        },
-
-        cancelNewTodo() {
-            this.newTodo = '';
-        },
+    resetTodo() {
+      this.newTodo = '';
     },
+  },
 
 };
 </script>
@@ -71,7 +82,13 @@ export default {
 
         .todo__remaining__todos {
             color: $background__color--primary--light;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+
+            p {
+                @include reset;
+            }
 
             input {
                 display: none;
