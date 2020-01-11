@@ -8,10 +8,10 @@
 import Todo from './components/Todo.vue';
 
 export default {
-  name: 'app',
-  components: {
-    Todo,
-  },
+    name: 'app',
+    components: {
+        Todo,
+    },
 };
 </script>
 
@@ -26,6 +26,10 @@ export default {
     font-family: $font__family--primary;
     background-color: $background__color--primary--dark;
     color: $color--primary;
+
+    *:focus {
+      outline: none;
+    }
 
     #app {
       @include app__view;

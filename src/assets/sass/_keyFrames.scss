@@ -1,0 +1,65 @@
+@mixin todo__checkbox--keyFrames ($checkbox--height) {
+  @-moz-keyframes inputBottomCheck {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: calc(#{$checkbox--height} / 2);
+    }
+  }
+
+  @-webkit-keyframes inputBottomCheck {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: calc(#{$checkbox--height} / 2);
+    }
+  }
+
+  @keyframes inputBottomCheck {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: calc(#{$checkbox--height} / 2);
+    }
+  }
+
+
+  @keyframes inputTopCheck {
+    0% {
+      height: 0;
+    }
+    50% {
+      height: 0;
+    }
+    100% {
+      height: $checkbox--height * 1.2;
+    }
+  }
+
+  @-webkit-keyframes inputTopCheck {
+    0% {
+      height: 0;
+    }
+    50% {
+      height: 0;
+    }
+    100% {
+      height: $checkbox--height * 1.2;
+    }
+  }
+
+  @-moz-keyframes inputTopCheck {
+    0% {
+      height: 0;
+    }
+    50% {
+      height: 0;
+    }
+    100% {
+      height: $checkbox--height * 1.2;
+    }
+  }
+}
