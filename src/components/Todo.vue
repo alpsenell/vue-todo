@@ -49,10 +49,6 @@ export default {
 <style scoped lang="scss">
     @import '../assets/sass/_variables';
     @import '../assets/sass/_mixins';
-    @import '../assets/sass/_keyFrames';
-
-    $checkbox--height: 25px;
-    $checkbox__animation--duration: 0.4s;
 
     #todo {
         @include font__size--main;
@@ -81,25 +77,11 @@ export default {
                 display: none;
             }
 
-            .todo__checkbox {
-                @include todo__checkbox($checkbox--height, $checkbox__animation--duration);
-            }
+            $checkbox--height: 25px;
+            $checkbox__animation--duration: 0.4s;
 
-            input:checked + .todo__checkbox,
-            .todo__checkbox.checked{
-                @include todo__checkbox--keyFrames($checkbox--height);
-                border-color: $color__input--checked;
-
-                &::after{
-                    height: $checkbox--height * .5;
-                    @include animation('inputBottomCheck 0.2s ease 0s forwards');
-                }
-
-                &::before{
-                    height: $checkbox--height * 1.2;
-                    @include animation('inputTopCheck 0.4s ease 0s forwards');
-                }
-            }
+            @include todo__checkbox--unchecked($checkbox--height, $checkbox__animation--duration);
+            @include todo__checkbox--checked($checkbox--height);
         }
     }
 </style>

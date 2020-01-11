@@ -1,4 +1,5 @@
 @import './_variables';
+@import './_keyFrames';
 
 @mixin transition-ease($duration: .25s) {
   -webkit-transition: all $duration ease;
@@ -93,61 +94,80 @@
   }
 }
 
-@mixin todo__checkbox($size, $duration) {
-  height: $size;
-  width: $size;
-  background-color: transparent;
-  border: $size * .1 solid $color__black;
-  border-radius: 5px;
-  position: relative;
-  display: inline-block;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -moz-transition: border-color ease $duration/2;
-  -o-transition: border-color ease $duration/2;
-  -webkit-transition: border-color ease $duration/2;
-  transition: border-color ease $duration/2;
-  cursor:pointer;
-
-  &::before, &::after {
+@mixin todo__checkbox--unchecked($size, $duration) {
+  .todo__checkbox {
+    height: $size;
+    width: $size;
+    background-color: transparent;
+    border: $size * .1 solid $color__input;
+    border-radius: 5px;
+    position: relative;
+    display: inline-block;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    position: absolute;
-    height: 0;
-    width: $size * .2;
-    background-color: $color__input--checked;
-    display: inline-block;
-    -moz-transform-origin: left top;
-    -ms-transform-origin: left top;
-    -o-transform-origin: left top;
-    -webkit-transform-origin: left top;
-    transform-origin: left top;
-    border-radius: 5px;
-    content: ' ';
-    -webkit-transition: opacity ease 0.5s;
-    -moz-transition: opacity ease 0.5s;
-    transition: opacity ease 0.5s;
-  }
+    -moz-transition: border-color ease $duration/2;
+    -o-transition: border-color ease $duration/2;
+    -webkit-transition: border-color ease $duration/2;
+    transition: border-color ease $duration/2;
+    cursor: pointer;
 
-  &::before {
-    top: $size * .72;
-    left: $size * .41;
-    -moz-transform: rotate(-135deg);
-    -ms-transform: rotate(-135deg);
-    -o-transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-    transform: rotate(-135deg);
-  }
+    &::before, &::after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      position: absolute;
+      height: 0;
+      width: $size * .2;
+      background-color: $color__input--checked;
+      display: inline-block;
+      -moz-transform-origin: left top;
+      -ms-transform-origin: left top;
+      -o-transform-origin: left top;
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+      border-radius: 5px;
+      content: ' ';
+      -webkit-transition: opacity ease 0.5s;
+      -moz-transition: opacity ease 0.5s;
+      transition: opacity ease 0.5s;
+    }
 
-  &::after {
-    top: $size * .37;
-    left: $size * .05;
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+    &::before {
+      top: $size * .72;
+      left: $size * .41;
+      -moz-transform: rotate(-135deg);
+      -ms-transform: rotate(-135deg);
+      -o-transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+
+    &::after {
+      top: $size * .37;
+      left: $size * .05;
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+@mixin todo__checkbox--checked($size) {
+  input:checked + .todo__checkbox {
+    @include todo__checkbox--keyFrames($size);
+    border-color: $color__input--checked;
+
+    &::after{
+      height: $size * .5;
+      @include animation('inputBottomCheck 0.2s ease 0s forwards');
+    }
+
+    &::before{
+      height: $size * 1.2;
+      @include animation('inputTopCheck 0.4s ease 0s forwards');
+    }
   }
 }

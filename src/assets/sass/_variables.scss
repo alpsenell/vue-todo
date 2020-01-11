@@ -5,7 +5,6 @@ $color--primary: #2c3e50;
 $color--input: #fefefe;
 $color__white: #ffffff;
 $color__black: #000000;
-$color__first: #667788;
-$color__input--checked: #34b93d;
+$color__input--checked: $color--input;
 
 $font__family--primary: 'Avenir', Helvetica, Arial, sans-serif;
