@@ -38,13 +38,19 @@ export default {
     isNewTodoEmpty() {
       return this.newTodo.trim() === '';
     },
+
+    isNewTodoAlreadyExists() {
+      return this.createdTodos.indexOf(this.newTodo.trim()) > -1;
+    },
   },
 
   methods: {
     addNewTodo() {
-      if (!this.isNewTodoEmpty) {
-        this.createdTodos.push(this.newTodo.trim());
+      if (this.isNewTodoEmpty || this.isNewTodoAlreadyExists) {
+        return;
       }
+
+      this.createdTodos.push(this.newTodo.trim());
 
       this.resetTodo();
     },

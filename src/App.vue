@@ -8,10 +8,10 @@
 import Todo from './components/Todo.vue';
 
 export default {
-    name: 'app',
-    components: {
-        Todo,
-    },
+  name: 'app',
+  components: {
+    Todo,
+  },
 };
 </script>
 
