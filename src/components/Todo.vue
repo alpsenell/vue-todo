@@ -19,6 +19,7 @@
                     :for="'todo__checkbox-' + index">
             </label>
             <p>{{assignment}}</p>
+            <div class="todo__remove--button"></div>
         </div>
     </div>
 </template>
@@ -87,6 +88,11 @@ export default {
         }
 
         .todo__remaining__todos {
+            $checkbox--height: 25px;
+            $checkbox__animation--duration: 0.4s;
+
+            @include todo__checkbox--unchecked($checkbox--height, $checkbox__animation--duration);
+            @include todo__checkbox--checked($checkbox--height);
             color: $background__color--primary--light;
             display: flex;
             justify-content: space-between;
@@ -100,11 +106,9 @@ export default {
                 display: none;
             }
 
-            $checkbox--height: 25px;
-            $checkbox__animation--duration: 0.4s;
-
-            @include todo__checkbox--unchecked($checkbox--height, $checkbox__animation--duration);
-            @include todo__checkbox--checked($checkbox--height);
+            .todo__remove--button {
+                @include todo__remove--button(32px, $background__color--primary--light);
+            }
         }
     }
 </style>
