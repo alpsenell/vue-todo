@@ -9,12 +9,12 @@
   transition: all $duration ease;
 }
 
-@mixin animation($str) {
-  -webkit-animation: #{$str};
-  -moz-animation: #{$str};
-  -ms-animation: #{$str};
-  -o-animation: #{$str};
-  animation: #{$str};
+@mixin animation($string) {
+  -webkit-animation: #{$string};
+  -moz-animation: #{$string};
+  -ms-animation: #{$string};
+  -o-animation: #{$string};
+  animation: #{$string};
 }
 
 @mixin reset__padding() {

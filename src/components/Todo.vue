@@ -8,7 +8,7 @@
                 type="text"
                 v-model="newTodo">
         <div
-                :key="assignment"
+                :key="assignment.id"
                 class="todo__remaining__todos large"
                 v-for="(assignment, index) in createdTodos">
             <input
@@ -18,7 +18,7 @@
                     class="todo__checkbox"
                     :for="'todo__checkbox-' + index">
             </label>
-            <p>{{assignment}}</p>
+            <p>{{assignment.text}}</p>
             <div class="todo__remove--button"></div>
         </div>
     </div>
@@ -28,7 +28,7 @@
 export default {
   name: 'Todo',
 
-  data() {
+  data () {
     return {
       newTodo: '',
       createdTodos: [],
@@ -36,28 +36,50 @@ export default {
   },
 
   computed: {
-    isNewTodoEmpty() {
+    isNewTodoEmpty () {
       return this.newTodo.trim() === '';
     },
 
-    isNewTodoAlreadyExists() {
-      return this.createdTodos.indexOf(this.newTodo.trim()) > -1;
+    isNewTodoAlreadyExists () {
+      const ids = this.createdTodos.map(todo => todo.text);
+
+      return ids.indexOf(this.newTodo.trim()) > -1;
+    },
+
+    totalTodos () {
+      return this.createdTodos.length;
+    },
+
+    lastId () {
+      return (this.createdTodos[this.totalTodos - 1] || {}).id || 0;
     },
   },
 
   methods: {
-    addNewTodo() {
+    addNewTodo () {
       if (this.isNewTodoEmpty || this.isNewTodoAlreadyExists) {
         return;
       }
 
-      this.createdTodos.push(this.newTodo.trim());
+      this.createdTodos.push(
+        this.createTodoObject(
+          this.newTodo.trim(),
+        ),
+      );
 
       this.resetTodo();
     },
 
-    resetTodo() {
+    resetTodo () {
       this.newTodo = '';
+    },
+
+    createTodoObject (todoName) {
+      return {
+        text: todoName,
+        id: this.lastId + 1,
+        checked: false,
+      };
     },
   },
 
