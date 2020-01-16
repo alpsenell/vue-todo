@@ -16,7 +16,8 @@
                     type="checkbox">
             <label
                     class="todo__checkbox"
-                    :for="'todo__checkbox-' + index">
+                    :for="'todo__checkbox-' + index"
+                    @click="toggleTodo(assignment)">
             </label>
             <p>{{assignment.text}}</p>
             <div class="todo__remove--button"></div>
@@ -74,12 +75,26 @@ export default {
       this.newTodo = '';
     },
 
+    /**
+     * @param {string} todoName
+     * @returns {object}
+     */
     createTodoObject (todoName) {
       return {
         text: todoName,
         id: this.lastId + 1,
         checked: false,
       };
+    },
+
+    /**
+     * @param {object} triggeredTodo
+     * @param {boolean} triggeredTodo.checked
+     */
+    toggleTodo (triggeredTodo) {
+      this.createdTodos.filter(todo => todo.id === triggeredTodo.id)[0].checked = !triggeredTodo.checked;
+
+      this.$forceUpdate();
     },
   },
 
