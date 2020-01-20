@@ -101,7 +101,7 @@ export default {
     },
 
     removeTodo (triggeredTodo) {
-      this.createdTodos.splice(this.createdTodos.findIndex(todos => todos.id === triggeredTodo.id, 1));
+      this.createdTodos.splice(this.createdTodos.findIndex(todos => todos.id === triggeredTodo.id), 1);
     },
   },
 
