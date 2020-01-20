@@ -20,7 +20,10 @@
                     @click="toggleTodo(assignment)">
             </label>
             <p>{{assignment.text}}</p>
-            <div class="todo__remove--button"></div>
+            <div
+                    class="todo__remove--button"
+                    @click="removeTodo(assignment)">
+            </div>
         </div>
     </div>
 </template>
@@ -95,6 +98,10 @@ export default {
       this.createdTodos.filter(todo => todo.id === triggeredTodo.id)[0].checked = !triggeredTodo.checked;
 
       this.$forceUpdate();
+    },
+
+    removeTodo (triggeredTodo) {
+      this.createdTodos.splice(this.createdTodos.findIndex(todos => todos.id === triggeredTodo.id, 1));
     },
   },
 
