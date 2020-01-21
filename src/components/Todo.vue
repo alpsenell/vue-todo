@@ -17,7 +17,7 @@
             <label
                     class="todo__checkbox"
                     :for="'todo__checkbox-' + index"
-                    @click="toggleTodo(assignment)">
+                    @click="toggleTodo(assignment, $event)">
             </label>
             <p>{{assignment.text}}</p>
             <div
@@ -94,8 +94,15 @@ export default {
      * @param {object} triggeredTodo
      * @param {boolean} triggeredTodo.checked
      */
-    toggleTodo (triggeredTodo) {
+    toggleTodo (triggeredTodo, event) {
+      const todoText = event.target.nextSibling;
       this.createdTodos.filter(todo => todo.id === triggeredTodo.id)[0].checked = !triggeredTodo.checked;
+
+      if (triggeredTodo.checked) {
+        todoText.className += 'todo__checked--text';
+      } else {
+        todoText.className = todoText.className.replace('todo__checked--text', '');
+      }
 
       this.$forceUpdate();
     },
@@ -144,6 +151,11 @@ export default {
 
             p {
                 @include reset;
+
+                &.todo__checked--text {
+                    text-decoration: line-through;
+                    color: $color__input--checked;
+                }
             }
 
             input {
