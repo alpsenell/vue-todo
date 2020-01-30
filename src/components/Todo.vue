@@ -25,6 +25,9 @@
                     @click="removeTodo(assignment)">
             </div>
         </div>
+        <div class="todo__total__todos">
+            <p>{{ unCompletedTodos }} todos left</p>
+        </div>
     </div>
 </template>
 
@@ -40,22 +43,38 @@ export default {
   },
 
   computed: {
+    /**
+     * @returns {string}
+     */
     isNewTodoEmpty () {
       return this.newTodo.trim() === '';
     },
 
+    /**
+     * @returns {boolean}
+     */
     isNewTodoAlreadyExists () {
       const ids = this.createdTodos.map(todo => todo.text);
 
       return ids.indexOf(this.newTodo.trim()) > -1;
     },
 
+    /**
+     * @returns {number}
+     */
     totalTodos () {
       return this.createdTodos.length;
     },
 
+    /**
+     * @returns {number}
+     */
     lastId () {
       return (this.createdTodos[this.totalTodos - 1] || {}).id || 0;
+    },
+
+    unCompletedTodos () {
+      return this.createdTodos.filter(todo => !todo.checked).length;
     },
   },
 
@@ -107,6 +126,10 @@ export default {
       this.$forceUpdate();
     },
 
+    /**
+     * @param {object} triggeredTodo
+     * @param {number} triggeredTodo.id
+     */
     removeTodo (triggeredTodo) {
       this.createdTodos.splice(this.createdTodos.findIndex(todos => todos.id === triggeredTodo.id), 1);
     },
@@ -165,6 +188,10 @@ export default {
             .todo__remove--button {
                 @include todo__remove--button(32px, $background__color--primary--light);
             }
+        }
+
+        .todo__total__todos {
+            color: $color__white;
         }
     }
 </style>
