@@ -1,5 +1,10 @@
 <template>
     <div id="todo">
+        <div class="todo__un--completed--todos"
+             :class="{ uncompleted: unCompletedTodos > 0 }">
+            <span>{{ unCompletedTodos }}</span>
+            <p> todos left</p>
+        </div>
         <input
                 @keyup.enter="addNewTodo"
                 @keyup.esc="resetTodo"
@@ -24,9 +29,6 @@
                     class="todo__remove--button"
                     @click="removeTodo(assignment)">
             </div>
-        </div>
-        <div class="todo__total__todos">
-            <p>{{ unCompletedTodos }} todos left</p>
         </div>
     </div>
 </template>
@@ -190,8 +192,20 @@ export default {
             }
         }
 
-        .todo__total__todos {
+        .todo__un--completed--todos {
             color: $color__white;
+            display: flex;
+            align-items: center;
+            color: $color__input--checked;
+
+            &.uncompleted {
+                color: red;
+            }
+
+            span {
+                margin-right: 10px;
+                font-size: 2em;
+            }
         }
     }
 </style>
