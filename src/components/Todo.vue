@@ -1,10 +1,6 @@
 <template>
     <div id="todo">
-        <div class="todo__un--completed--todos"
-             :class="{ uncompleted: unCompletedTodos > 0 }">
-            <span>{{ unCompletedTodos }}</span>
-            <p> todos left</p>
-        </div>
+        <uncompleted-todos :uncompleted-todos="unCompletedTodos"></uncompleted-todos>
         <input
                 @keyup.enter="addNewTodo"
                 @keyup.esc="resetTodo"
@@ -34,8 +30,14 @@
 </template>
 
 <script>
+import UncompletedTodos from './UncompletedTodos.vue';
+
 export default {
   name: 'Todo',
+
+  components: {
+    UncompletedTodos,
+  },
 
   data () {
     return {
@@ -75,6 +77,9 @@ export default {
       return (this.createdTodos[this.totalTodos - 1] || {}).id || 0;
     },
 
+    /**
+     * @returns {number}
+     */
     unCompletedTodos () {
       return this.createdTodos.filter(todo => !todo.checked).length;
     },
@@ -114,6 +119,7 @@ export default {
     /**
      * @param {object} triggeredTodo
      * @param {boolean} triggeredTodo.checked
+     * @param {object} event
      */
     toggleTodo (triggeredTodo, event) {
       const todoText = event.target.nextSibling;
@@ -189,22 +195,6 @@ export default {
 
             .todo__remove--button {
                 @include todo__remove--button(32px, $background__color--primary--light);
-            }
-        }
-
-        .todo__un--completed--todos {
-            color: $color__white;
-            display: flex;
-            align-items: center;
-            color: $color__input--checked;
-
-            &.uncompleted {
-                color: red;
-            }
-
-            span {
-                margin-right: 10px;
-                font-size: 2em;
             }
         }
     }
