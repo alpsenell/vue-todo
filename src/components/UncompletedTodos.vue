@@ -2,7 +2,7 @@
     <div class="todo__un--completed--todos"
          :class="{ uncompleted: uncompletedTodos > 0 }">
         <span>{{ uncompletedTodos }}</span>
-        <p> todos left</p>
+        <p>todos left</p>
     </div>
 </template>
 
